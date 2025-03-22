@@ -27,12 +27,13 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    // Gerenciadores e utilitários do sistema
     private ActivityManager activityManager;
     private PackageManager packageManager;
     private WindowManager windowManager;
     private TextView tvResult;
 
+    // BroadcastReceiver para monitorar mudanças na bateria
     private BroadcastReceiver batteryReceiver;
 
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Inicializa o BroadcastReceiver
+        // Inicializa o BroadcastReceiver para monitorar o nível da bateria
         batteryReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -57,17 +58,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Inicializa botões e o TextView
         Button btnCheckProcesses = findViewById(R.id.btnCheckProcesses);
         Button btnCheckApps = findViewById(R.id.btnCheckApps);
         tvResult = findViewById(R.id.tvResults);
 
+        // Obtém os serviços do sistema necessários
         activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-
         packageManager = getPackageManager();
-
         windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
-
+        // Define eventos de clique nos botões
         btnCheckProcesses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Ajusta dinamicamente o layout de acordo com a largura da tela
         adjustLayoutForScreenWidth();
     }
 
@@ -131,10 +133,12 @@ public class MainActivity extends AppCompatActivity {
 
         StringBuilder result = new StringBuilder("Apps Instalados:\n\n");
 
+        // Itera sobre todos os aplicativos instalados
         for (ApplicationInfo appInfo : installedApps) {
             String appName = appInfo.loadLabel(packageManager).toString();  // Nome amigável
             String packageName = appInfo.packageName;  // Nome do pacote
 
+            // Adiciona informações formatadas à string de resultado
             result.append("📌 ").append(appName).append("\n")  // Nome do app
                     .append("📦 Pacote: ").append(packageName).append("\n\n"); // Nome do pacote
         }
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         tvResult.setText(result.toString());
     }
 
-    // metodo para gerenciar a tela de forma dinamica
+    // Método para ajustar dinamicamente o tamanho da fonte do TextView com base na largura da tela
     private void adjustLayoutForScreenWidth(){
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -151,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         int width = displayMetrics.widthPixels;
 
+        // Ajusta tamanho da fonte conforme a largura da tela
         if (width > 1000) {
             tvResult.setTextSize(20);
         } else {
