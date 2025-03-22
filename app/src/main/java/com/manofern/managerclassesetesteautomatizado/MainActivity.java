@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     .append("\n");
 
         }
-
+        // Atualiza a UI com os processos encontrados
         tvResult.setText(result.toString());
 
     }
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             result.append("📌 ").append(appName).append("\n")  // Nome do app
                     .append("📦 Pacote: ").append(packageName).append("\n\n"); // Nome do pacote
         }
-
+        // Atualiza a UI com os Apps instalados
         tvResult.setText(result.toString());
     }
 
