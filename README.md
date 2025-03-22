@@ -7,4 +7,5 @@
 
 
 ### Teste Automatizado
-![2025-03-22_09-58](https://github.com/user-attachments/assets/8d8b7789-cc49-4747-8adc-caaa1f5c5659)
+![2025-03-22_11-42](https://github.com/user-attachments/assets/fabf1329-416d-44be-bb7b-26db02ec3017)
+
