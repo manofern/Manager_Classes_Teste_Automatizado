@@ -3,7 +3,7 @@
 
 
 ### Logs
-![2025-03-22_09-59](https://github.com/user-attachments/assets/79f63ab2-9445-4aad-a775-549bc549529f)
+![2025-03-22_11-45](https://github.com/user-attachments/assets/1ac04bb7-de2b-4cdf-979c-caee661f25c2)
 
 
 ### Teste Automatizado
