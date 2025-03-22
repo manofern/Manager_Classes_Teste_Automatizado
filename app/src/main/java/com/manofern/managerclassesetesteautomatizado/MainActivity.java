@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
     // metodo para Listar os App instalados
     private void ListInstalledApps() {
-        PackageManager packageManager = getPackageManager();
         List<ApplicationInfo> installedApps = packageManager.getInstalledApplications(0);
 
         StringBuilder result = new StringBuilder("Apps Instalados:\n\n");
