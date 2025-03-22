@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -84,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btnSimulatePause = findViewById(R.id.btnSimulatePause);
+        btnSimulatePause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simulateOnPause();
+            }
+        });
+
         adjustLayoutForScreenWidth();
     }
 
@@ -100,8 +110,77 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         Log.d("MainActivity", "onStop chamado");
         super.onStop();
+
         // Remove o BroadcastReceiver para evitar vazamentos de memória
         unregisterReceiver(batteryReceiver);
+
+        // Diminui o brilho da tela para 50%
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = 0.5f; // 0.5f representa 50% do brilho
+        getWindow().setAttributes(layoutParams);
+
+        Log.d("MainActivity", "Brilho da tela ajustado para 50%");
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d("MainActivity", "onRestart chamado");
+        super.onRestart();
+
+        // Restaura o brilho da tela para o valor do sistema
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = -1.0f; // -1.0f significa usar o brilho do sistema
+        getWindow().setAttributes(layoutParams);
+
+        Log.d("MainActivity", "Brilho da tela restaurado para o valor padrão");
+    }
+
+    private void simulateOnPause() {
+        // Chamar onPause() explicitamente
+        onPause();
+
+        // Criar diálogo com listener para o botão OK
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Simulando onPause()")
+                .setMessage("O brilho da tela foi reduzido para 10%. Clique em OK para restaurar (onResume).")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Chamar onResume() explicitamente quando o usuário clicar em OK
+                        onResume();
+                        Log.d("MainActivity", "onResume chamado manualmente pelo clique no OK");
+                    }
+                })
+                .setCancelable(false) // Para evitar que o usuário cancele o diálogo pressionando fora dele
+                .show();
+
+        Log.d("MainActivity", "onPause chamado explicitamente e diálogo exibido");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("MainActivity", "onPause chamado");
+
+        // Alterar o brilho da tela para 10% on pause
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = 0.1f; // 10% do brilho
+        getWindow().setAttributes(layoutParams);
+
+        Log.d("MainActivity", "Brilho da tela ajustado para 10% em onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainActivity", "onResume chamado");
+
+        // Restaurar o brilho original quando a activity voltar ao foco
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = -1.0f; // Usar o brilho do sistema
+        getWindow().setAttributes(layoutParams);
+
+        Log.d("MainActivity", "Brilho da tela restaurado em onResume");
     }
 
 
