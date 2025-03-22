@@ -106,6 +106,24 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(batteryReceiver);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainActivity", "onResume chamado");
+
+        // Obtendo o serviço ActivityManager
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+
+        // Obtendo a lista de processos em execução
+        List<ActivityManager.RunningAppProcessInfo> runningProcesses = activityManager.getRunningAppProcesses();
+
+        // Exibindo no log o nome do primeiro processo em execução (caso haja)
+        if (runningProcesses != null && !runningProcesses.isEmpty()) {
+            Log.d("MainActivity", "Primeiro processo em execução: " + runningProcesses.get(0).processName);
+        }
+    }
+
+
 
     // metodo para gerenciar os preocessos
     private void CheckRunningProcesses(){
