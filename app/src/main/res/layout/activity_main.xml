@@ -41,14 +41,25 @@
         app:layout_constraintTop_toBottomOf="@+id/btnCheckProcesses" />
 
     <!-- ScrollView para envolver o tvResults -->
+
+    <Button
+        android:id="@+id/btnSimulatePause"
+        android:layout_width="379dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="12dp"
+        android:text="Simular onPause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCheckApps" />
+
     <ScrollView
-        android:layout_width="372dp"
-        android:layout_height="482dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="371dp"
+        android:layout_height="430dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCheckApps">
+        app:layout_constraintTop_toBottomOf="@+id/btnSimulatePause"
+        app:layout_constraintVertical_bias="0.627">
 
         <TextView
             android:id="@+id/tvResults"
