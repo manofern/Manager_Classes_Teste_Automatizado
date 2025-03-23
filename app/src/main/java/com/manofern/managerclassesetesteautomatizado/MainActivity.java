@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onStop chamado");
         super.onStop();
 
-        // Remove o BroadcastReceiver para evitar vazamentos de memória
-        unregisterReceiver(batteryReceiver);
-
         // Diminui o brilho da tela para 50%
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.screenBrightness = 0.5f; // 0.5f representa 50% do brilho
@@ -195,6 +192,21 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", "Brilho da tela ajustado para 10% em onPause");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MainActivity", "onDestroy chamado");
+
+        // Liberar recursos e evitar vazamentos de memória
+        if (batteryReceiver != null) {
+            unregisterReceiver(batteryReceiver);
+            batteryReceiver = null;
+        }
+
+        Log.d("MainActivity", "Recursos liberados em onDestroy");
+    }
+
 
     // metodo para gerenciar os preocessos
     private void CheckRunningProcesses(){
