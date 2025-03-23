@@ -198,13 +198,13 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("MainActivity", "onDestroy chamado");
 
+        Log.d("MainActivity", "Recursos liberados em onDestroy");
         // Liberar recursos e evitar vazamentos de memória
         if (batteryReceiver != null) {
             unregisterReceiver(batteryReceiver);
             batteryReceiver = null;
         }
 
-        Log.d("MainActivity", "Recursos liberados em onDestroy");
     }
 
 
