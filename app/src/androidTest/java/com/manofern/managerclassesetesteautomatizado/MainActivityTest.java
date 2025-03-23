@@ -78,7 +78,6 @@ public class MainActivityTest {
         return false;
     }
 
-
     /**
      * Testes focados no ciclo de vida e alteração de brilho
      */
@@ -221,6 +220,26 @@ public class MainActivityTest {
         // Fecha a Activity para testar o onStop
         activityRule.getScenario().close();
         assertTrue("Log onStop não encontrado!", isLogPresent("onStop chamado"));
+    }
+
+    @Test
+    public void testOnPauseLog() {
+        activityRule.getScenario().onActivity(activity -> activity.moveTaskToBack(true));
+        assertTrue("Log onPause não encontrado!", isLogPresent("onPause chamado"));
+    }
+
+    @Test
+    public void testOnRestartLog() {
+        ActivityScenario<MainActivity> scenario = activityRule.getScenario();
+        scenario.moveToState(androidx.lifecycle.Lifecycle.State.CREATED);
+        scenario.moveToState(androidx.lifecycle.Lifecycle.State.RESUMED);
+        assertTrue("Log onRestart não encontrado!", isLogPresent("onRestart chamado"));
+    }
+
+    @Test
+    public void testOnDestroyLog() {
+        activityRule.getScenario().close();
+        assertTrue("Log onDestroy não encontrado!", isLogPresent("onDestroy chamado"));
     }
 }
 
